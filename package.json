@@ -1,0 +1,19 @@
+{
+  "name": "cfl-pdf-scraper",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "ts-node src/main.ts"
+  },
+  "keywords": [],
+  "author": "Dean Kertai",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "openai": "^4.47.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "ts-node": "^10.9.2"
+  }
+}
