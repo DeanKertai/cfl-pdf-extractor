@@ -125,7 +125,7 @@ function parseResponse(response: string, columns: Column[]): PlayerStats[] {
 
 		const stats: Record<string, string> = {};
 		for (let i = 0; i < columns.length; i++) {
-			stats[columns[i].name] = stats[i];
+			stats[columns[i].name] = values[i];
 		}
 
 		output.push({
