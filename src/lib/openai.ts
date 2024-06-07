@@ -46,11 +46,12 @@ export async function getStats(inputs: {
 	fileId: string;
 	tableName: string;
 	columns: Column[];
+	additionalContext?: string;
 }): Promise<PlayerStats[]> {
 	logInfo(`Analyzing ${inputs.tableName}`);
 	await openai.beta.threads.messages.create(inputs.threadId, {
 		role: "user",
-		content: buildPrompt(inputs.tableName, inputs.columns),
+		content: buildPrompt(inputs.tableName, inputs.columns, inputs.additionalContext),
 		attachments: [
 			{
 				file_id: inputs.fileId,
@@ -82,11 +83,14 @@ export async function getStats(inputs: {
 		const stats = parseResponse(text, inputs.columns);
 		return stats;
 	} else {
+		logError(`Run failed. Status: ${run.status}`);
+		logError(run.incomplete_details?.reason ?? "Unknown reason");
+		logError(JSON.stringify(run, null, 2));
 		throw new Error(`Run failed. Status: ${run.status}`);
 	}
 }
 
-function buildPrompt(tableName: string, columns: Column[]): string {
+function buildPrompt(tableName: string, columns: Column[], additionalContext?: string): string {
 	return `
 		Please summarize the individual player statistics from the 
 		following columns in the ${tableName} tables:
@@ -108,6 +112,8 @@ function buildPrompt(tableName: string, columns: Column[]): string {
 		including the triple quotes indicating the start end end of the csv block.
 		Do not include any column headers, just the data. Make sure the columns
 		are in the same order as I gave you.
+
+		${additionalContext ?? ""}
 	`.replace(/\t+/g, "");
 }
 
