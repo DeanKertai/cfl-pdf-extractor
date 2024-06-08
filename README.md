@@ -8,6 +8,10 @@ There is no way anyone in my family is going to manually copy hundreds of statis
 
 This project uses the OpenAI API to analyze the PDFs and extract the data in to CSV format so it can be easily parsed.
 
+## Deprecation Note
+
+The CFL now has an easily parsable _internal_ API. I no longer need to analyze PDF files. New repo here: https://github.com/DeanKertai/cfl-api-py
+
 ## Get Started
 
 1. Install NodeJS
